@@ -1,5 +1,3 @@
-use std::str::Chars;
-
 const FN_KEYWORD: &str = "fn";
 const LET_KEYWORD: &str = "let";
 const TRUE_KEYWORD: &str = "true";
@@ -74,16 +72,16 @@ where
     chars: std::iter::Peekable<I>,
 }
 
-impl<I> LexerImpl<I>
-where
-    I: Iterator<Item = char>,
-{
-    pub fn new(chars: I) -> Self {
-        Self {
-            chars: chars.peekable(),
-        }
-    }
-}
+// impl<I> LexerImpl<I>
+// where
+//     I: Iterator<Item = char>,
+// {
+//     pub fn new(chars: I) -> Self {
+//         Self {
+//             chars: chars.peekable(),
+//         }
+//     }
+// }
 
 impl<I> Iterator for LexerImpl<I>
 where
@@ -91,6 +89,7 @@ where
 {
     type Item = Token;
 
+    // next returns `None` as `EOF`
     fn next(&mut self) -> Option<Self::Item> {
         // ignore all whitespaces
         while let Some(&c) = self.chars.peek() {
@@ -99,14 +98,6 @@ where
             }
             self.chars.next();
         }
-
-        // return one EOF before returning None
-        // TODO: think if it would be a good idea to just interpret None
-        // as EOF
-        // let next_char = match self.chars.next() {
-        //     Some(c) => c,
-        //     None => return Some(Token::Eof),
-        // };
 
         let token = match self.chars.next()? {
             // TODO: maybe edge case if next char is EOF?

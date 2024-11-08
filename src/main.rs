@@ -11,7 +11,7 @@ struct Repl {
 impl Repl {
     fn new(prompt: &'static str) -> Repl {
         Repl {
-            prompt: prompt,
+            prompt,
             //lexer: Lexer::new(""),
         }
     }
